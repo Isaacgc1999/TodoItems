@@ -8,6 +8,7 @@ class Program
         var repo = new InMemoryTodoListRepository();
         var todoList = new TodoList(repo);
 
+        Console.WriteLine("TODO INITIALIZED: ",todoList);
         todoList.PrintItems();
     }
 }
