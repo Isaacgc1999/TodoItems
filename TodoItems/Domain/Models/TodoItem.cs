@@ -11,7 +11,7 @@ namespace TodoItems.Domain.Models
 
         public bool IsCompleted => TotalProgress >= 100;
 
-        public float TotalProgress => Progressions.Sum(p => p.Percent);
+        public float TotalProgress => Progressions.Sum(p => p.Percentage);
 
         public TodoItem(int id, string title, string description, string category)
         {
@@ -28,7 +28,7 @@ namespace TodoItems.Domain.Models
 
         public void AddProgression(Progression newProgression)
         {
-            if(newProgression.Percent <= 0 || newProgression.Percent >= 100)
+            if(newProgression.Percentage <= 0 || newProgression.Percentage >= 100)
             {
                 throw new ArgumentException("The percentage must be a number between 0 and 100");
             }
@@ -38,7 +38,7 @@ namespace TodoItems.Domain.Models
                 throw new ArgumentException("The date of the new progression must be greater to the last one");
             }
 
-            if (TotalProgress + newProgression.Percent > 100)
+            if (TotalProgress + newProgression.Percentage > 100)
             {
                 throw new ArgumentException("Cannot surpass the 100% of progress");
             }

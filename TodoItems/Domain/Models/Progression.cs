@@ -3,12 +3,12 @@
     public class Progression
     {
         public DateTime Date { get; }
-        public float Percent { get; }
+        public float Percentage { get; }
 
-        public Progression(DateTime date, float percent)
+        public Progression(DateTime date, float percentage)
         {
             Date = date;
-            Percent = percent;
+            Percentage = percentage;
         }
     }
 }

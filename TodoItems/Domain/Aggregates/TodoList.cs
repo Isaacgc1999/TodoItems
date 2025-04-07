@@ -1,5 +1,6 @@
 ﻿using TodoItems.Domain.Interfaces;
 using TodoItems.Domain.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TodoItems.Domain.Aggregates
 {
@@ -64,8 +65,10 @@ namespace TodoItems.Domain.Aggregates
 
                 foreach (var progression in item.Progressions)
                 {
-                    currentProgress += progression.Percent;
-                    Console.WriteLine($"{progression.Date} - {currentProgress}% | {new string('O', (int)currentProgress)}|");
+                    currentProgress += progression.Percentage;
+                    var time = progression.Date.ToString("h:mm tt");
+
+                    Console.WriteLine($"{DateOnly.FromDateTime(progression.Date)} {time} - {currentProgress}% | {new string('O', (int)currentProgress)}|");
                 }
                 Console.WriteLine("");
             }

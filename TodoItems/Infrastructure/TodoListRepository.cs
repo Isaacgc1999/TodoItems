@@ -9,6 +9,7 @@ namespace TodoItems.Infrastructure
 
         public int GetNextId()
         {
+            Console.WriteLine(_currentId);
             return ++_currentId;
         }
 
