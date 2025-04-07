@@ -125,7 +125,7 @@ class Program
         Console.Write("Insert the id of the item: ");
         if (int.TryParse(Console.ReadLine(), out int id))
         {
-            Console.Write("Insert the progression's date (yyyy-MM-dd): ");
+            Console.Write("Insert the progression's date (yyyy-MM-dd HH:mm): ");
             if (DateTime.TryParse(Console.ReadLine(), out DateTime date))
             {
                 Console.Write("Now insert the percentage that was completed that day: ");

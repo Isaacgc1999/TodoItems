@@ -74,7 +74,7 @@ namespace TodoItems.Domain.Aggregates
                     currentProgress += progression.Percentage;
                     var time = progression.Date.ToString("h:mm tt");
 
-                    Console.WriteLine($"{DateOnly.FromDateTime(progression.Date)} {time} - {currentProgress}% | {new string('O', (int)currentProgress)}|");
+                    Console.WriteLine($"{DateOnly.FromDateTime(progression.Date)} {time} - {currentProgress}% |{new string('O', (int)currentProgress)}|");
                 }
                 Console.WriteLine("");
             }
