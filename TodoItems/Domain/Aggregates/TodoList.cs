@@ -10,27 +10,66 @@ namespace TodoItems.Domain.Aggregates
 
         public void AddItem(int id, string title, string description, string category)
         {
-            // future validations
+            if (!_repository.GetAllCategories().Contains(category))
+            {
+                throw new ArgumentException("The inserted category is not valid.");
+            }
+
+            var newItem = new TodoItem(id, title, description, category);
+            _items.Add(newItem);
         }
 
         public void UpdateItem(int id, string description)
         {
-            // logic
+            var item = _items.FirstOrDefault(x => x.Id == id) 
+                ?? throw new KeyNotFoundException("The requested Item was not found.");
+
+            if(item.TotalProgress > 50)
+            {
+                throw new InvalidOperationException("You cannot update any item with more than 50% of progress");
+            }
+
+            item.UpdateDescription(description);
         }
 
         public void RemoveItem(int id)
         {
-            // logic
+            var item = _items.FirstOrDefault(x => x.Id == id)
+                ?? throw new KeyNotFoundException("The requested Item was not found.");
+
+            if (item.TotalProgress > 50)
+            {
+                throw new InvalidOperationException("You cannot delete any item with more than 50% of progress");
+            }
+
+            _items.Remove(item);
         }
 
-        public void RegisterProgression(int id, DateTime dateTime, decimal percent)
+        public void RegisterProgression(int id, DateTime dateTime, float percent)
         {
-            // logic
+            var item = _items.FirstOrDefault(x => x.Id == id)
+                ?? throw new KeyNotFoundException("The requested Item was not found.");
+
+            var progression = new Progression(dateTime, percent);
+            item.AddProgression(progression);
         }
 
         public void PrintItems()
         {
-            // Show the list of items
+            foreach(var item in _items.OrderBy(i => i.Id))
+            {
+                Console.WriteLine($"{item.Id}) {item.Title} - {item.Description} ({item.Category}) Completed:{item.IsCompleted}");
+
+                float currentProgress = 0;
+
+                foreach (var progression in item.Progressions)
+                {
+                    currentProgress += progression.Percent;
+                    Console.WriteLine($"{progression.Date} - {currentProgress}% | {new string('O', (int)currentProgress)}|");
+                }
+                Console.WriteLine("");
+            }
+
         }
     }
 

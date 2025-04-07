@@ -11,7 +11,7 @@ namespace TodoItems.Domain.Models
 
         public bool IsCompleted => TotalProgress >= 100;
 
-        public decimal TotalProgress => Progressions.Sum(p => p.Percent);
+        public float TotalProgress => Progressions.Sum(p => p.Percent);
 
         public TodoItem(int id, string title, string description, string category)
         {
