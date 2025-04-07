@@ -4,27 +4,11 @@ using TodoItems.Infrastructure;
 
 class Program
 {
-        public static readonly ITodoListRepository repo = new InMemoryTodoListRepository();
-        public static readonly ITodoList todoList = new TodoList(repo);
-    
+    public static readonly ITodoListRepository repo = new InMemoryTodoListRepository();
+    public static readonly ITodoList todoList = new TodoList(repo);
+
     static void Main()
     {
-
-        //int id = repo.GetNextId();
-
-        //todoList.AddItem(id,"Buy groceries", "Milk, bread, eggs", "Personal");
-        //todoList.AddItem(id,"Write report", "Final project report", "Work");
-        //todoList.AddItem(id,"Study for math's exam", "School", "Studies");
-
-        //// Register some progress
-        //todoList.RegisterProgression(id, new DateTime(2025, 3, 18), 30);
-        //todoList.RegisterProgression(id, new DateTime(2025, 3, 19), 50);
-        //todoList.RegisterProgression(id, new DateTime(2025, 3, 20), 20);
-
-        //// Print all items
-        //Console.WriteLine("--- Todo List ---");
-        //todoList.PrintItems();
-
         while (true)
         {
             Console.WriteLine("\n--- Todo List Manager ---");
@@ -37,9 +21,9 @@ class Program
             Console.WriteLine("");
             Console.Write("Select an option: ");
 
-            string choice = Console.ReadLine() ?? "";
+            string selection = Console.ReadLine() ?? "";
 
-            switch (choice)
+            switch (selection)
             {
                 case "1":
                     AddTodoItem(todoList);
@@ -83,7 +67,7 @@ class Program
             todoListManager.AddItem(id, title, description, category);
             Console.WriteLine("Item added correctly.");
         }
-        catch (ArgumentException ex)
+        catch (Exception ex)
         {
             Console.WriteLine($"There was an error trying to add the item: {ex.Message}");
         }
@@ -102,13 +86,9 @@ class Program
                 todoListManager.UpdateItem(id, newDescription);
                 Console.WriteLine("Item's description updated correctly.");
             }
-            catch (InvalidOperationException ex)
-            {
-                Console.WriteLine($"There was an error trying to add the item: {ex.Message}");
-            }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"There was a problem trying to update the item: {ex.Message}");
             }
         }
         else
@@ -128,13 +108,9 @@ class Program
                 todoListManager.RemoveItem(id);
                 Console.WriteLine("The item was correctly deleted.");
             }
-            catch (InvalidOperationException ex)
-            {
-                Console.WriteLine($"There was an error trying to delete the item: {ex.Message}");
-            }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"There was a problem trying to delete the item: {ex.Message}");
             }
         }
         else
@@ -160,17 +136,9 @@ class Program
                         todoListManager.RegisterProgression(id, date, percentage);
                         Console.WriteLine("The progress was noted.");
                     }
-                    catch (ArgumentException ex)
-                    {
-                        Console.WriteLine($"There was a problem trying to register the progress: {ex.Message}");
-                    }
-                    catch (InvalidOperationException ex)
-                    {
-                        Console.WriteLine($"There was a problem trying to register the progress: {ex.Message}");
-                    }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error: {ex.Message}");
+                        Console.WriteLine($"There was a problem trying to register the progress: {ex.Message}");
                     }
                 }
                 else

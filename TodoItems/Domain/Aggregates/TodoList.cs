@@ -57,7 +57,13 @@ namespace TodoItems.Domain.Aggregates
 
         public void PrintItems()
         {
-            foreach(var item in _items.OrderBy(i => i.Id))
+            if(_items.Count == 0)
+            {
+                Console.WriteLine("No items found.");
+                return;
+            }
+
+            foreach (var item in _items.OrderBy(i => i.Id))
             {
                 Console.WriteLine($"{item.Id}) {item.Title} - {item.Description} ({item.Category}) Completed:{item.IsCompleted}");
 
