@@ -1,5 +1,5 @@
 ﻿
-namespace TodoItems.Domain.Models
+namespace TodoListServer.Models
 {
     public class TodoItem
     {

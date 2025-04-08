@@ -4,7 +4,7 @@ using TodoItems.Infrastructure;
 
 class Program
 {
-    public static readonly ITodoListRepository repo = new InMemoryTodoListRepository();
+    public static readonly ITodoListRepository repo = new TodoListRepository();
     public static readonly ITodoList todoList = new TodoList(repo);
 
     static void Main()
