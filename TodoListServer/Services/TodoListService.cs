@@ -3,7 +3,7 @@ using TodoListServer.Interfaces;
 
 namespace TodoListServer.Services
 {
-    public class TodoList(ITodoListRepository repository) : ITodoListService
+    public class TodoListService(ITodoListRepository repository) : ITodoListService
     {
         private readonly ITodoListRepository _repository = repository;
 
@@ -52,8 +52,8 @@ namespace TodoListServer.Services
                        ?? throw new KeyNotFoundException($"The requested Item with ID {id} was not found.");
 
             var newProgression = new Progression(dateTime, percent);
-            item.AddProgression(newProgression);
-            _repository.UpdateItem(item);
+            var updatedItem = item.AddProgression(newProgression);
+            _repository.UpdateItem(updatedItem);
         }
 
         public TodoItem GetItemById(int id)

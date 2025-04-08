@@ -25,7 +25,7 @@ namespace TodoListServer.Controllers
         {
             try
             {
-                var item = _todoList.GetAllItems().FirstOrDefault(x => x.Id == id);
+                var item = _todoList.GetItemById(id);
                 if (item == null)
                 {
                     return NotFound();
@@ -61,7 +61,7 @@ namespace TodoListServer.Controllers
             try
             {
                 _todoList.UpdateItem(id, model.Description);
-                return NoContent();
+                return Ok(_todoList.GetAllItems());
             }
             catch (KeyNotFoundException)
             {
@@ -79,7 +79,7 @@ namespace TodoListServer.Controllers
             try
             {
                 _todoList.RemoveItem(id);
-                return NoContent();
+                return Ok(_todoList.GetAllItems());
             }
             catch (KeyNotFoundException)
             {
@@ -97,17 +97,13 @@ namespace TodoListServer.Controllers
             try
             {
                 _todoList.RegisterProgression(todoItemId, model.Date, model.Percentage);
-                return Ok();
+                return Ok(_todoList.GetAllItems());
             }
             catch (KeyNotFoundException)
             {
                 return NotFound();
             }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

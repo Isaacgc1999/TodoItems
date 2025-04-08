@@ -1,3 +1,7 @@
+using TodoListServer.Interfaces;
+using TodoListServer.Repositories;
+using TodoListServer.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<ITodoListRepository, TodoListRepository>();
+builder.Services.AddScoped<ITodoListService, TodoListService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

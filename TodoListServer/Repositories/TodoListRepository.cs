@@ -44,6 +44,6 @@ namespace TodoListServer.Repositories
             }
         }
 
-        public List<TodoItem> GetAllItems() => [.. _items];
+        public List<TodoItem> GetAllItems() => _items;
     }
 }
