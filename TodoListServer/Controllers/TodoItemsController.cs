@@ -97,7 +97,7 @@ namespace TodoListServer.Controllers
             try
             {
                 _todoList.RegisterProgression(todoItemId, model.Date, model.Percentage);
-                return Ok(_todoList.GetAllItems());
+                return Ok(_todoList.GetItemById(todoItemId));
             }
             catch (KeyNotFoundException)
             {

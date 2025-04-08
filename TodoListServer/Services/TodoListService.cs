@@ -51,9 +51,27 @@ namespace TodoListServer.Services
             var item = _repository.GetItemById(id)
                        ?? throw new KeyNotFoundException($"The requested Item with ID {id} was not found.");
 
-            var newProgression = new Progression(dateTime, percent);
-            var updatedItem = item.AddProgression(newProgression);
-            _repository.UpdateItem(updatedItem);
+            if (percent <= 0 || percent > 100)
+            {
+                throw new ArgumentOutOfRangeException(nameof(percent), "The percentage must be a number between 0 and 100");
+            }
+
+            if (item.Progressions.Any() && dateTime <= item.Progressions.Last().Date)
+            {
+                throw new ArgumentException("The date of the new progression must be greater than the last one");
+            }
+
+            if (item.TotalProgress + percent > 100)
+            {
+                throw new ArgumentException("Cannot surpass the 100% of progress");
+            }
+
+            if (!item.Progressions.Any(p => p.Date == dateTime && Math.Abs(p.Percentage - percent) < 0.001))
+            {
+                var newProgression = new Progression(dateTime, percent);
+                item.AddProgression(newProgression);
+                _repository.UpdateItem(item);
+            }
         }
 
         public TodoItem GetItemById(int id)

@@ -1,4 +1,5 @@
-﻿using TodoListServer.Interfaces;
+﻿using System;
+using TodoListServer.Interfaces;
 using TodoListServer.Models;
 
 namespace TodoListServer.Repositories
@@ -36,11 +37,10 @@ namespace TodoListServer.Repositories
         public void UpdateItem(TodoItem item)
         {
             var existingItem = GetItemById(item.Id);
+
             if (existingItem != null)
             {
                 existingItem.UpdateDescription(item.Description);
-                existingItem.Progressions.Clear();
-                existingItem.Progressions.AddRange(item.Progressions);
             }
         }
 
