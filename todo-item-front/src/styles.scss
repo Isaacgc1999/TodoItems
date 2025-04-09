@@ -1,1 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #eee;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+h2 {
+    color: #555;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+form {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input[type="text"],
+textarea {
+    width: calc(100% - 12px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;  
+    overflow-x: hidden; 
+    overflow-y: auto;   
+    min-height: 80px;
+}

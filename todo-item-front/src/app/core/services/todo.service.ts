@@ -14,9 +14,7 @@ export class TodoService {
   constructor(private http: HttpClient) {}
 
   getTodos(): Observable<TodoItem[]> {
-    return this.http.get<TodoItem[]>(this.apiUrl).pipe(
-      tap(todos => console.log('Todos fetched:', todos)),
-    );
+    return this.http.get<TodoItem[]>(this.apiUrl);
   }
 
   getTodo(id: number): Observable<TodoItem> {

@@ -1,15 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TodoItem } from '../../shared/models/todo-item';
 import { TodoService } from '../../core/services/todo.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule, MatButtonModule]
 })
 export class TodoListComponent implements OnInit {
   todos: TodoItem[] = [];
@@ -27,23 +27,20 @@ export class TodoListComponent implements OnInit {
         this.todos = todos;
       },
       error: (error) => {
-        console.error('Error al cargar las tareas:', error);
-      },
-      complete: () => {
-        console.log('Carga de tareas completada');
+        console.error('There was an error trying to load the items:', error);
       }
     });
   }
 
   deleteTodo(id: number): void {
-    this.todoService.deleteTodo(id).subscribe(
-      () => {
+    this.todoService.deleteTodo(id).subscribe({
+      next: () => {
         this.loadTodos();
       },
-      (error) => {
-        console.error('Error al eliminar la tarea:', error);
+      error: (error) => {
+        console.error('There was an error trying to delete the item:', error);
       }
-    );
+    });
   }
 
   openEditForm(todo: TodoItem): void {
@@ -57,11 +54,14 @@ export class TodoListComponent implements OnInit {
   saveEdit(): void {
     if (this.editingTodo) {
       this.todoService.updateTodo(this.editingTodo.id, { description: this.editingTodo.description})
-        .subscribe(() => {
-          this.loadTodos();
-          this.closeEditForm();
-        }, (error) => {
-          console.error('Error al guardar la edición:', error);
+        .subscribe({
+          next: () => {
+            this.loadTodos();
+            this.closeEditForm();
+          },
+          error: (error) => {
+            console.error('There was an error trying to update the item:', error);
+          }
         });
     }
   }

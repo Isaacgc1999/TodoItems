@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { TodoListComponent } from '../todo-list/todo-list.component';
 import { TodoService } from '../../core/services/todo.service';
-import { CommonModule } from '@angular/common';
 import { FormsModule, NgModel } from '@angular/forms';
 import { CreateTodoItem, TodoItem } from '../../shared/models/todo-item';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
-  imports: [TodoListComponent, FormsModule],
+  imports: [TodoListComponent, FormsModule, MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

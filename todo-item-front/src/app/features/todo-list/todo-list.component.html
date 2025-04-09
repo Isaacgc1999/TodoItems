@@ -2,7 +2,7 @@
 @if (todos.length > 0) {
     <ul>
         @for (todo of todos; track todo.id) {
-        <li>
+        <li class="todos">
             <span>{{ todo.title }}</span>
             <div class="actions">
             <button (click)="deleteTodo(todo.id)">Delete</button>
@@ -10,22 +10,22 @@
             </div>
 
             @if (editingTodo && editingTodo.id === todo.id) {
-            <h3>Update Task</h3>
-            <form (ngSubmit)="saveEdit()">
-                <div>
-                    <label for="title">Title:</label>
-                    <label for="title">{{editingTodo.title}}</label>
-                </div>
-                <div>
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description" [(ngModel)]="editingTodo.description"></textarea>
-                </div>
-                <div class="description">
-                    <label for="category">Category:</label>
-                    <label for="category">{{editingTodo.category}}</label>
-                </div>
-                <button type="submit">Save Task</button>
-                <button (click)="closeEditForm()">Cancel</button>
+                <h2>Update Task</h2>
+                <form (ngSubmit)="saveEdit()">
+                    <div>
+                        <label for="title">Title:</label>
+                        <input disabled type="text" id="title" name="title" [(ngModel)]="editingTodo.title" required>
+                    </div>
+                    <div>
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" [(ngModel)]="editingTodo.description"></textarea>
+                    </div>
+                    <div>
+                        <label for="category">Category:</label>
+                        <input  disabled type="text" id="category" name="category" [(ngModel)]="editingTodo.category">
+                    </div>
+                    <button mat-button type="submit">Save Task</button>
+                    <button mat-button type="button" (click)="closeEditForm()">Cancel</button>
                 </form>
             }
 
