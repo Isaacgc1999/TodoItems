@@ -1,24 +1,46 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TodoItem } from '../../shared/models/todo-item';
+import { CreateTodoItem, TodoItem } from '../../shared/models/todo-item';
 import { TodoService } from '../../core/services/todo.service';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
   standalone: true,
-  imports: [FormsModule, MatButtonModule]
+  imports: [FormsModule, MatButtonModule, MatSelectModule, MatInputModule]
 })
 export class TodoListComponent implements OnInit {
   todos: TodoItem[] = [];
   editingTodo: TodoItem | null = null;
   addingProgressionFor: TodoItem | null = null;
   todoService = inject(TodoService);
+  newTask: CreateTodoItem = { title: '', description: '', category: '' };
+  showAddTaskForm = false;
 
+  categories: string[] = ['Work', 'Personal', 'Studies', 'Others'];
   ngOnInit(): void {
     this.loadTodos();
+  }
+
+  openAddTaskForm(): void {
+    this.showAddTaskForm = true;
+    this.newTask = { title: '', description: '', category: '' };
+  }
+
+  closeAddTaskForm(): void {
+    this.showAddTaskForm = false;
+  }
+
+  addTask(): void {
+    this.todoService.createTodo(this.newTask).subscribe(() => {
+      this.newTask = { title: '', description: '', category: '' };
+      this.closeAddTaskForm();
+      this.loadTodos();
+    });
   }
 
   loadTodos(): void {

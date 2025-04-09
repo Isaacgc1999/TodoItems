@@ -12,26 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  newTask: CreateTodoItem = { title: '', description: '', category: '' };
-  showAddTaskForm = false;
-  @Output() taskAdded = new EventEmitter<TodoItem>();
 
   constructor(private todoService: TodoService) {}
 
-  openAddTaskForm(): void {
-    this.showAddTaskForm = true;
-    this.newTask = { title: '', description: '', category: '' };
-  }
-
-  closeAddTaskForm(): void {
-    this.showAddTaskForm = false;
-  }
-
-  addTask(): void {
-    this.todoService.createTodo(this.newTask).subscribe(() => {
-      this.taskAdded.emit(this.newTask as TodoItem);
-      this.newTask = { title: '', description: '', category: '' };
-      this.closeAddTaskForm();
-    });
-  }
 }

@@ -1,42 +1,69 @@
-<h2>Task List</h2>
-@if (todos.length > 0) {
-    <ul>
-        @for (todo of todos; track todo.id) {
-        <li class="todos">
-            <span>{{ todo.title }}</span>
-            <div class="actions">
-            <button (click)="deleteTodo(todo.id)">Delete</button>
-            <button (click)="openEditForm(todo)">Update</button>
+<div class="todo-list">
+    <button mat-button (click)="openAddTaskForm()">Add Task</button>
+    @if(showAddTaskForm){
+    
+        <h2>Add a new Task</h2>
+        <form (ngSubmit)="addTask()">
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" required name="title" [(ngModel)]="newTask.title" required>
             </div>
-
-            @if (editingTodo && editingTodo.id === todo.id) {
-                <h2>Update Task</h2>
-                <form (ngSubmit)="saveEdit()">
-                    <div>
-                        <label for="title">Title:</label>
-                        <input disabled type="text" id="title" name="title" [(ngModel)]="editingTodo.title" required>
-                    </div>
-                    <div>
-                        <label for="description">Description:</label>
-                        <textarea id="description" name="description" [(ngModel)]="editingTodo.description"></textarea>
-                    </div>
-                    <div>
-                        <label for="category">Category:</label>
-                        <input  disabled type="text" id="category" name="category" [(ngModel)]="editingTodo.category">
-                    </div>
-                    <button mat-button type="submit">Save Task</button>
-                    <button mat-button type="button" (click)="closeEditForm()">Cancel</button>
-                </form>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" required name="description" [(ngModel)]="newTask.description"></textarea>
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <mat-select matNativeControl required type="text" id="category" name="category" [(ngModel)]="newTask.category">
+                    @for(category of categories; track category) {
+                        <mat-option  [value]="category">{{ category }}</mat-option>
+                    }
+                </mat-select>
+            </div>
+            <button mat-button type="submit">Save Task</button>
+            <button mat-button type="button" (click)="closeAddTaskForm()">Cancel</button>
+        </form>
+    }
+</div>
+    <h2>Task List</h2>
+    @if (todos.length > 0) {
+        <ul>
+            @for (todo of todos; track todo.id) {
+            <li class="todos">
+                <span class="todos__title">{{ todo.title }}</span>
+                <div class="todos__buttons">
+                    <button (click)="deleteTodo(todo.id)">Delete</button>
+                    <button (click)="openEditForm(todo)">Update</button>
+                </div>
+    
+                @if (editingTodo && editingTodo.id === todo.id) {
+                    <h2>Update Task</h2>
+                    <form (ngSubmit)="saveEdit()">
+                        <div>
+                            <label for="title">Title:</label>
+                            <input disabled type="text" id="title" name="title" [(ngModel)]="editingTodo.title" required>
+                        </div>
+                        <div>
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" [(ngModel)]="editingTodo.description"></textarea>
+                        </div>
+                        <div>
+                            <label for="category">Category:</label>
+                            <input  disabled type="text" id="category" name="category" [(ngModel)]="editingTodo.category">
+                        </div>
+                        <button mat-button type="submit">Save Task</button>
+                        <button mat-button type="button" (click)="closeEditForm()">Cancel</button>
+                    </form>
+                }
+    
+                @if (addingProgressionFor && addingProgressionFor.id === todo.id) {
+                <h3>Añadir Progresión</h3>
+                <button (click)="saveProgression()">Guardar Progresión</button>
+                <button (click)="closeAddProgressionForm()">Cancelar</button>
+                }
+            </li>
             }
-
-            @if (addingProgressionFor && addingProgressionFor.id === todo.id) {
-            <h3>Añadir Progresión</h3>
-            <button (click)="saveProgression()">Guardar Progresión</button>
-            <button (click)="closeAddProgressionForm()">Cancelar</button>
-            }
-        </li>
-        }
-    </ul>
-} @else {
-    <p>No pending tasks.</p>
-}
+        </ul>
+    } @else {
+        <p>No pending tasks.</p>
+    }
