@@ -7,11 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoItems", "TodoItems\Todo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoListServer", "TodoListServer\TodoListServer.csproj", "{CC5BDEFA-9B7A-4604-9B6E-E2BB22809CDA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "front", "front", "{6B9E282A-18CD-47FE-9E98-4DD789C7A644}"
-	ProjectSection(SolutionItems) = preProject
-		example = example
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
