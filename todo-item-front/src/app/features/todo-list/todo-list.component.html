@@ -1,0 +1,42 @@
+<h2>Task List</h2>
+@if (todos.length > 0) {
+    <ul>
+        @for (todo of todos; track todo.id) {
+        <li>
+            <span>{{ todo.title }}</span>
+            <div class="actions">
+            <button (click)="deleteTodo(todo.id)">Delete</button>
+            <button (click)="openEditForm(todo)">Update</button>
+            </div>
+
+            @if (editingTodo && editingTodo.id === todo.id) {
+            <h3>Update Task</h3>
+            <form (ngSubmit)="saveEdit()">
+                <div>
+                    <label for="title">Title:</label>
+                    <label for="title">{{editingTodo.title}}</label>
+                </div>
+                <div>
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" [(ngModel)]="editingTodo.description"></textarea>
+                </div>
+                <div class="description">
+                    <label for="category">Category:</label>
+                    <label for="category">{{editingTodo.category}}</label>
+                </div>
+                <button type="submit">Save Task</button>
+                <button (click)="closeEditForm()">Cancel</button>
+                </form>
+            }
+
+            @if (addingProgressionFor && addingProgressionFor.id === todo.id) {
+            <h3>Añadir Progresión</h3>
+            <button (click)="saveProgression()">Guardar Progresión</button>
+            <button (click)="closeAddProgressionForm()">Cancelar</button>
+            }
+        </li>
+        }
+    </ul>
+} @else {
+    <p>No pending tasks.</p>
+}
