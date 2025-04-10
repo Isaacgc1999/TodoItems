@@ -5,21 +5,36 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { Progression } from '../../shared/models/progression';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSliderModule } from '@angular/material/slider';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
   standalone: true,
-  imports: [FormsModule, MatButtonModule, MatSelectModule, MatInputModule]
+  imports: [FormsModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSliderModule,
+    DatePipe]
 })
 export class TodoListComponent implements OnInit {
+  todoService = inject(TodoService);
   todos: TodoItem[] = [];
   editingTodo: TodoItem | null = null;
-  addingProgressionFor: TodoItem | null = null;
-  todoService = inject(TodoService);
+  newProgression: Progression = { date: new Date(), percentage: 0 };
   newTask: CreateTodoItem = { title: '', description: '', category: '' };
   showAddTaskForm = false;
+  addingProgressionFor: TodoItem | null = null;
 
   categories: string[] = ['Work', 'Personal', 'Studies', 'Others'];
   ngOnInit(): void {
@@ -90,6 +105,7 @@ export class TodoListComponent implements OnInit {
 
   openAddProgressionForm(todo: TodoItem): void {
     this.addingProgressionFor = todo;
+    this.newProgression = { date: new Date(), percentage: 0 }; 
   }
 
   closeAddProgressionForm(): void {
@@ -97,18 +113,16 @@ export class TodoListComponent implements OnInit {
   }
 
   saveProgression(): void {
-    if (this.addingProgressionFor /* && this.newProgressionData.date && this.newProgressionData.percentage !== null */) {
-      // Ajusta la llamada al servicio con los datos correctos
-      // this.todoService.addProgression(this.addingProgressionFor.id, { date: this.newProgressionData.date, percentage: this.newProgressionData.percentage })
-      //   .subscribe(() => {
-      //     this.loadTodos();
-      //     this.closeAddProgressionForm();
-      //   }, (error) => {
-      //     console.error('Error al añadir la progresión:', error);
-      //   });
-      console.warn('Función saveProgression() no completamente implementada.');
-      this.closeAddProgressionForm();
-      this.loadTodos(); 
+    if (this.addingProgressionFor) {
+      this.todoService.addProgression(this.addingProgressionFor.id, this.newProgression).subscribe({
+        next: () => {
+          this.loadTodos();
+          this.closeAddProgressionForm();
+        },
+        error: (error) => {
+          console.error('There was an error trying to add the progression:', error);
+        }
+      });
     }
   }
 }

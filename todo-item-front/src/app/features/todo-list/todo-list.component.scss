@@ -18,13 +18,13 @@
 }
 
 button:hover {
-    background-color: #e0e0e0; /* Slightly darker on hover */
+    background-color: #e0e0e0; 
     border-color: #666;
 }
 
 button:active {
-    background-color: #d0d0d0; /* Even darker when active */
-    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2); /* Inset shadow on click */
+    background-color: #d0d0d0;
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2); 
 }
 
 .description{
@@ -52,7 +52,6 @@ button:active {
             display: flex;
             flex-direction: column;
             padding-left: 10px;
-           
         }
     }
 }
