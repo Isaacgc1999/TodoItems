@@ -1,0 +1,96 @@
+<div class="todo-list">
+    <button mat-button  class="task-button" (click)="openAddTaskForm()">Add Task</button>
+    @if(showAddTaskForm){
+    
+        <h2>Add a new Task</h2>
+        <form (ngSubmit)="addTask()">
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" required name="title" [(ngModel)]="newTask.title" required>
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" required name="description" [(ngModel)]="newTask.description"></textarea>
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <mat-select required class="custom-select" name="category" [(ngModel)]="newTask.category">
+                    @for(category of categories; track category) {
+                        <mat-option  [value]="category">{{ category }}</mat-option>
+                    }
+                </mat-select>
+            </div>
+            <button mat-button class="task-button" type="submit">Save Task</button>
+            <button mat-button class="task-button" type="button" (click)="closeAddTaskForm()">Cancel</button>
+        </form>
+    }
+</div>
+    <h2>Task List</h2>
+    @if (todos.length > 0) {
+        <ul>
+            @for (todo of todos; track todo.id) {
+            <li class="todos">
+                <span class="todos__title">{{ todo.title }}</span>
+                <div class="todos__title__info">
+                    <span class="todos__title__info__description">Description: {{ todo.description }}</span>
+                    <span class="todos__title__info__category">Category: {{ todo.category }}</span>
+                    @for(progression of todo.progressions; track progression.date) {
+                        <span class="todos__title__info__progression">Progression: {{ progression.percentage }}% on {{ progression.date | date }}</span>
+                    }
+                    <span class="todos__title__info__progression">Progression: {{ todo.progressions }}</span>
+                </div>
+                <div class="todos__buttons">
+                    <button (click)="deleteTodo(todo.id)">Delete</button>
+                    <button (click)="openEditForm(todo)">Update</button>
+                    <button (click)="openAddProgressionForm(todo)">Add Progression</button>
+                </div>
+    
+                @if (editingTodo && editingTodo.id === todo.id) {
+                    <h2>Update Task</h2>
+                    <form (ngSubmit)="saveEdit()">
+                        <div>
+                            <label for="title">Title:</label>
+                            <input disabled type="text" id="title" name="title" [(ngModel)]="editingTodo.title" required>
+                        </div>
+                        <div>
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" [(ngModel)]="editingTodo.description"></textarea>
+                        </div>
+                        <div>
+                            <label for="category">Category:</label>
+                            <input  disabled type="text" id="category" name="category" [(ngModel)]="editingTodo.category">
+                        </div>
+                        <button mat-button type="submit">Save Task</button>
+                        <button mat-button type="button" (click)="closeEditForm()">Cancel</button>
+                    </form>
+                }
+    
+                @if (addingProgressionFor && addingProgressionFor.id === todo.id) {
+                <h3>Add Progression</h3>
+                <form (ngSubmit)="saveProgression()">
+                    <mat-form-field>
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [(ngModel)]="newProgression.date" [matDatepicker]="picker" name="progressionDate" required>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                
+                    <mat-form-field>
+                        <mat-label>Percentage (0-100)</mat-label>
+                        <input matInput type="number" id="progressionPercentage" name="progressionPercentage" [(ngModel)]="newProgression.percentage" min="0" max="100" required>
+                        <mat-hint>{{ newProgression.percentage }}%</mat-hint>
+                    </mat-form-field>
+                
+                    <button mat-button type="submit">Save Progression</button>
+                    <button mat-button type="button" (click)="closeAddProgressionForm()">Cancel</button>
+                </form>
+                <button (click)="saveProgression()">Save Progression</button>
+                <button (click)="closeAddProgressionForm()">Cancel</button>
+                }
+            </li>
+            }
+        </ul>
+    } @else {
+        <p>No pending tasks.</p>
+    }
