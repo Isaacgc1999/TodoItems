@@ -75,7 +75,7 @@ export class TodoListComponent implements OnInit {
 
   saveEdit(): void {
     if (this.editingTodo) {
-      this.todoService.updateTodo(this.editingTodo.id, { description: this.editingTodo.description})
+      this.todoService.updateTodo(this.editingTodo.id, this.editingTodo)
         .subscribe({
           next: () => {
             this.loadTodos();
