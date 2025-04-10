@@ -13,9 +13,20 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ITodoListRepository, TodoListRepository>();
 builder.Services.AddScoped<ITodoListService, TodoListService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", // I define the cors policy name
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // the origin is the front's port
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,6 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAngularDev");
 
 app.UseAuthorization();
 
