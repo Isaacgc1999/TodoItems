@@ -3,11 +3,11 @@ namespace TodoListServer.Models
 {
     public class TodoItem
     {
-        public int Id { get; }
-        public string Title { get; }
-        public string Description { get; private set; }
-        public string Category { get; }
-        public List<Progression> Progressions { get; } = [];
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Category { get; set; }
+        public List<Progression> Progressions { get; set; } = [];
 
         public bool IsCompleted => TotalProgress >= 100;
 
