@@ -11,6 +11,7 @@ import { Progression } from '../../shared/models/progression';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { DatePipe } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-todo-list',
@@ -25,7 +26,8 @@ import { DatePipe } from '@angular/common';
     MatFormFieldModule,
     MatNativeDateModule,
     MatSliderModule,
-    DatePipe]
+    DatePipe,
+    MatProgressBarModule]
 })
 export class TodoListComponent implements OnInit {
   todoService = inject(TodoService);
