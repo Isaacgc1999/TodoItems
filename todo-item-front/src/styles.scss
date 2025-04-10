@@ -9,8 +9,9 @@ button {
     margin-right: 10px;
     cursor: pointer;
     border: 1px solid #555;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #eee;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); 
 }
 
 button:hover {
