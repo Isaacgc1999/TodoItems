@@ -32,12 +32,25 @@
             <li class="todos">
                 <span class="todos__title">{{ todo.title }}</span>
                 <div class="todos__title__info">
+
                     <span class="todos__title__info__description">Description: {{ todo.description }}</span>
                     <span class="todos__title__info__category">Category: {{ todo.category }}</span>
                     @for(progression of todo.progressions; track progression.date) {
-                        <span class="todos__title__info__progression">Progression: {{ progression.percentage }}% on {{ progression.date | date }}</span>
+                        <div class="progression">
+                            @for(progression of todo.progressions; track progression.date) {
+                                <div class="progression percentage">
+                                    <span>Progression: {{ progression.percentage }}%</span>
+                                    <mat-progress-bar mode="determinate" value={{progression.percentage}}></mat-progress-bar>
+                                </div>
+                                <span class="progression__date"> on {{ progression.date | date }}</span>
+                            }
+                        </div>
+                        @if(todo.totalProgress === 100) {
+                            <span class="progression__completed">Task Completed</span>
+                        } @else {
+                            <span class="progression__not-completed">Task Not Completed</span>
+                        }
                     }
-                    <span class="todos__title__info__progression">Progression: {{ todo.progressions }}</span>
                 </div>
                 <div class="todos__buttons">
                     <button (click)="deleteTodo(todo.id)">Delete</button>
@@ -85,8 +98,7 @@
                     <button mat-button type="submit">Save Progression</button>
                     <button mat-button type="button" (click)="closeAddProgressionForm()">Cancel</button>
                 </form>
-                <button (click)="saveProgression()">Save Progression</button>
-                <button (click)="closeAddProgressionForm()">Cancel</button>
+
                 }
             </li>
             }
