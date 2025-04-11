@@ -142,3 +142,5 @@ namespace TodoListServer.Tests.Controllers
             Assert.IsType<BadRequestObjectResult>(result);
             _mockService.Verify(service => service.UpdateItem(1, "New Desc"), Times.Once);
         }
+    }
+}
