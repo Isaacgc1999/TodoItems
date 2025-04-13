@@ -68,9 +68,10 @@ namespace TodoListServer.Services
 
             if (!item.Progressions.Any(p => p.Date == dateTime && Math.Abs(p.Percentage - percent) < 0.001))
             {
-                var newProgression = new Progression(dateTime, percent);
+                var previousTotal = item.Progressions.Sum(p => p.Percentage);
+                var newTotal = previousTotal + percent;
+                var newProgression = new Progression(dateTime, newTotal);
                 item.AddProgression(newProgression);
-                _repository.UpdateItem(item);
             }
         }
 

@@ -44,6 +44,25 @@ namespace TodoListServer.Repositories
             }
         }
 
-        public List<TodoItem> GetAllItems() => _items;
+        //public List<TodoItem> GetAllItems() => _items;
+
+
+        public List<TodoItem> GetAllItems()
+        {
+            if (_items == null)
+            {
+                throw new InvalidOperationException("La colección de items no está inicializada.");
+            }
+
+            if (_items.Count == 0)
+            {
+                return [];
+            }
+
+            return _items
+                .OrderBy(item => item.Id)
+                .ToList();
+        }
+
     }
 }
