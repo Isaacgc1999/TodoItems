@@ -67,9 +67,31 @@ ul{
 }
 
 ::ng-deep .mat-mdc-select-panel {
-    background-color: white !important;
-    color: black !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3); // para darle algo de profundidad
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+form div{
+    margin-bottom: 0;
+}
+
+.mat-mdc-select-trigger{
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 98.6%;
+    display: inline;
+    
+}
+
+.mat-mdc-select-value{
+    width: 98%;
+}
+
+.mat-mdc-select-arrow svg{
+    display: none;
+}
