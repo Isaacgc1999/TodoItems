@@ -1,17 +1,17 @@
 <h2>Update Task</h2>
 <form (ngSubmit)="saveEdit()">
-    @if(editingTodo()){
+    @if(todo()){
         <div>
             <label for="title">Title:</label>
-            <input disabled type="text" id="title" name="title" [(ngModel)]="editingTodo().title" required>
+            <input disabled type="text" id="title" name="title" [(ngModel)]="todo().title" required>
         </div>
         <div>
             <label for="description">Description:</label>
-            <textarea id="description" name="description" [(ngModel)]="editingTodo().description"></textarea>
+            <textarea id="description" name="description" [(ngModel)]="todo().description"></textarea>
         </div>
         <div>
             <label for="category">Category:</label>
-            <input  disabled type="text" id="category" name="category" [(ngModel)]="editingTodo().category">
+            <input  disabled type="text" id="category" name="category" [(ngModel)]="todo().category">
         </div>
         <button mat-button type="submit">Save Task</button>
         <button mat-button type="button" (click)="closeEditing.emit(true)">Cancel</button>

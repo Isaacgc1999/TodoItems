@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TodoEditComponent } from "../todo-edit/todo-edit.component";
 import { TodoAddComponent } from '../todo-add/todo-add.component';
+import { TodoProgressionComponent } from '../todo-progression/todo-progression.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -21,24 +22,19 @@ import { TodoAddComponent } from '../todo-add/todo-add.component';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
   imports: [FormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatNativeDateModule,
-    MatSliderModule,
-    DatePipe,
     MatProgressBarModule,
+    DatePipe,
     TodoEditComponent,
-    TodoAddComponent]
+    TodoAddComponent,
+    TodoProgressionComponent]
 })
 export class TodoListComponent implements OnInit {
   todoService = inject(TodoService);
   todos: TodoItem[] = [];
-  newProgression: Progression = { date: new Date(), percentage: 0 };
   showAddTaskForm = false;
   addingProgressionFor: TodoItem | null = null;
   editingTodo: UpdateTodoItem | null = null;
+  newProgression: Progression | null = null;;
 
   ngOnInit(): void {
     this.loadTodos();
@@ -60,7 +56,12 @@ export class TodoListComponent implements OnInit {
       category: todo.category,
       progressions: todo.progressions
     };
-    return updateItem;
+    this.editingTodo = updateItem;
+    return this.editingTodo;
+  }
+
+  isNewProgressionDateInvalid(todo: TodoItem): boolean {
+    return todo.progressions.some(p => new Date(p.date) >= new Date(todo.progressions[todo.progressions.length-1] .date));
   }
 
   loadTodos(): void {
@@ -87,24 +88,11 @@ export class TodoListComponent implements OnInit {
 
   openAddProgressionForm(todo: TodoItem): void {
     this.addingProgressionFor = todo;
-    this.newProgression = { date: new Date(), percentage: 0 }; 
   }
 
   closeAddProgressionForm(): void {
     this.addingProgressionFor = null;
   }
 
-  saveProgression(): void {
-    if (this.addingProgressionFor) {
-      this.todoService.addProgression(this.addingProgressionFor.id, this.newProgression).subscribe({
-        next: () => {
-          this.loadTodos();
-          this.closeAddProgressionForm();
-        },
-        error: (error) => {
-          console.error('There was an error trying to add the progression:', error);
-        }
-      });
-    }
-  }
+
 }

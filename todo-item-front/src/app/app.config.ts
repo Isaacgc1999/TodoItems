@@ -3,9 +3,11 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
-    importProvidersFrom(HttpClientModule)]
+    importProvidersFrom(HttpClientModule),
+    provideNativeDateAdapter()]
 };

@@ -13,18 +13,18 @@ import { CommonModule } from '@angular/common';
 })
 export class TodoEditComponent {
   private todoService = inject(TodoService);
-  todos: TodoItem[] = [];
-  readonly editingTodo = input.required<UpdateTodoItem>();
+  readonly todo = input.required<UpdateTodoItem>();
   readonly closeEditing = output<boolean>();
+  readonly loadTodos = output<boolean>();
+
+  // todoEdit: UpdateTodoItem = {id: 0, title: '', description: '', category: '', progressions: []};
 
   saveEdit(): void {
-    const edited = this.editingTodo();
-    console.log('Saving edit:', this.editingTodo());
-    if (edited) {
-      this.todoService.updateTodo(edited.id, edited)
+    if (this.todo().id) {
+      this.todoService.updateTodo(this.todo().id, this.todo())
         .subscribe({
           next: () => {
-            this.loadTodos();
+            this.loadTodos.emit(true);
             this.closeEditing.emit(true);
           },
           error: (error) => {
@@ -32,13 +32,5 @@ export class TodoEditComponent {
           }
         });
     }
-  }
-
-  loadTodos(): void {
-    this.todoService.todos$.subscribe((todos) => {
-      if (todos) this.todos = todos;
-    });
-
-    this.todoService.loadTodos();
   }
 }
