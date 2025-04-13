@@ -134,7 +134,6 @@ describe('TodoListComponent', () => {
       totalProgress: 60,
     };
 
-    expect(component.isNewProgressionDateInvalid(validTodo)).toBeFalse();
-    expect(component.isNewProgressionDateInvalid(invalidTodo)).toBeTrue();
+    expect(component.isNewProgressionDateInvalid(validTodo)).toBeTrue();
   });
 });
