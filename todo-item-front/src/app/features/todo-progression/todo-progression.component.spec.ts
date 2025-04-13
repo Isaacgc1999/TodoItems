@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TodoProgressionComponent } from './todo-progression.component';
+import { HttpClientTestingModule, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TodoService } from '../../core/services/todo.service';
 
 describe('TodoProgressionComponent', () => {
   let component: TodoProgressionComponent;
@@ -8,7 +10,8 @@ describe('TodoProgressionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TodoProgressionComponent]
+      imports: [TodoProgressionComponent, HttpClientTestingModule],
+      providers: [TodoService]
     })
     .compileComponents();
 

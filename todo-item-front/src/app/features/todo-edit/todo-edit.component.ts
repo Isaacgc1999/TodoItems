@@ -17,8 +17,6 @@ export class TodoEditComponent {
   readonly closeEditing = output<boolean>();
   readonly loadTodos = output<boolean>();
 
-  // todoEdit: UpdateTodoItem = {id: 0, title: '', description: '', category: '', progressions: []};
-
   saveEdit(): void {
     if (this.todo().id) {
       this.todoService.updateTodo(this.todo().id, this.todo())
