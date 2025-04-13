@@ -1,42 +1,64 @@
-# TodoList Application
+# Todo Tasks Application
 
-This project is a full-stack TodoList application composed of three main parts:
+This repository contains the source code for a complete task management application (Todo Tasks), distributed in three parts: a console application, a Web API, and a frontend developed with Angular.
 
-1.  **TodoItems (Console Application):** A command-line interface for interacting with Todo items. This application demonstrates basic CRUD operations and provides a way to manage tasks directly from the terminal.
+## Distribution
 
-2.  **TodoServer (WebApi):** An ASP.NET Core Web API that serves as the backend for managing Todo items. It exposes endpoints for creating, reading, updating, and deleting tasks, as well as managing their progress. This API is the core of the application's data management and provides the necessary functionality for the frontend.
+1.  **Console Application (.NET):**
+    * A functional application developed in .NET, accessible and operable directly from the command line.
+    * Offers an intuitive user interface to interact with tasks.
 
-3.  **Frontend:** A user interface build with angular that allows users to interact with the TodoList application through a web browser. This frontend consumes the API provided by `TodoServer` to display and manage tasks.
+    ![image](https://github.com/user-attachments/assets/30cc2a95-fab2-4eae-979a-fbbad1c58666)
 
-## Testing
 
-Currently, **all unit tests for this project are located within the `TodoServer` (WebApi) project.** This includes tests for:
+2.  **WebApi Application (.NET):**
+    * A RESTful API developed in .NET that serves as the backend for task management.
+    * Provides endpoints to perform the following operations:
+        * Create new tasks.
+        * Edit existing tasks.
+        * Delete tasks.
+        * Add and manage the progression of each task.
 
-* **Repositories:** Ensuring the data access layer interacts correctly with the underlying data store.
-* **Services:** Verifying the business logic and rules of the application are implemented correctly.
-* **Controllers:** Testing the API endpoints to ensure they handle requests appropriately, return the correct responses, and interact with the service layer as expected.
+    ![image](https://github.com/user-attachments/assets/cf0246cf-df38-4764-ba35-35e7ba6b2f1b)
 
-**Note:** While the current testing strategy focuses on the backend API, it's important to consider adding tests for the `TodoItems` console application and the Frontend in the future to ensure the complete application functions as intended.
 
-## Getting Started
+3.  **Frontend with Angular 19:**
+    * A modern and reactive user interface developed with Angular 19.
+    * Designed to be intuitive, attractive, and easy to use.
+    * Implements the following best practices and Angular features:
+        * **Signals:** For efficient and granular state management.
+        * **Routers:** For smooth navigation between different sections of the application.
+        * **Observables (RxJS):** For handling asynchronous data streams, especially in communication with the Web API.
+        * **BEM (Block, Element, Modifier):** For a modular and maintainable CSS structure.
+        * **Dependency Injection:** For a decoupled and easily testable code architecture.
+        * Other Angular development best practices.
 
-Instructions on how to run each part of the application will vary depending on the specific technologies used. Please refer to the individual README files (if they exist) within the `TodoItems`, `TodoServer`, and `Frontend` directories for detailed setup and execution instructions.
+    ![image](https://github.com/user-attachments/assets/2d55b11b-3cc1-41ff-9996-e923e4fac351)
 
-**Typically, you might need to:**
 
-* **TodoServer (WebApi):**
-    * Navigate to the `TodoServer` directory in your terminal.
-    * Run the application using the .NET CLI (e.g., `dotnet run`).
-    * Ensure any required database or other dependencies are configured.
+## Testing and Code Coverage
 
-* **Frontend:**
-    * Navigate to the `Frontend` directory in your terminal.
-    * Install dependencies using a package manager (e.g., `npm install` or `yarn install`).
-    * Start the development server (e.g., `npm start` or `yarn start`).
-    * The frontend application will likely connect to the API running on the `TodoServer`.
+Unit and integration tests have been implemented in both the WebApi (.NET) application and the frontend (Angular). No automated tests were performed on the console application.
 
-* **TodoItems (Console Application):**
-    * Navigate to the `TodoItems` directory in your terminal.
-    * Build the application using the .NET CLI (e.g., `dotnet build`).
-    * Run the executable (e.g., `dotnet run` or the built executable in the `bin` directory).
-    * This application might interact directly with a data store or potentially with the `TodoServer` API.
+### Frontend (Angular) Code Coverage:
+
+The code coverage report for the Angular frontend is as follows:
+```
+Statements    : 85.33% ( 64/75 )
+Branches      : 50% ( 1/2 )
+Functions     : 75.75% ( 25/33 )
+Lines         : 84.72% ( 61/72 )
+```
+This indicates a good level of test coverage in Angular, yet, could be better.
+
+## Other Images
+
+To visualize the different parts of the application, spaces have been reserved to insert images:
+
+![image](https://github.com/user-attachments/assets/7eee1729-bdf6-4b01-b5e7-a312f44ccfb1)
+![image](https://github.com/user-attachments/assets/2cdfe10f-4ef8-40cf-9d20-bd2a57a755a0)
+![image](https://github.com/user-attachments/assets/f9cccca2-458f-40bf-9510-5f438859b94f)
+![image](https://github.com/user-attachments/assets/0bb94042-7bfc-4ee7-8821-b8083135d733)
+
+
+
