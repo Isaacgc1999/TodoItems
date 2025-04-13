@@ -1,0 +1,12 @@
+.todo-add{
+    width: 100%;
+    display: flex;
+
+    &__category{
+
+        ::ng-deep .mat-select-panel {
+            background-color: white !important;
+            color: black !important;
+        }
+    }
+}

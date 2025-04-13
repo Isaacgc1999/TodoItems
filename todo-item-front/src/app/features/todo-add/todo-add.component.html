@@ -1,0 +1,23 @@
+<h2>Add a new Task</h2>
+<div class="todo-add">
+    <form (ngSubmit)="addTask()">
+        <div class="todo-add__title">
+            <label>Title:</label>
+            <input type="text" required name="title" [(ngModel)]="newTask.title" required>
+        </div>
+        <div class="todo-add__description">
+            <label>Description:</label>
+            <textarea  required name="description" [(ngModel)]="newTask.description"></textarea>
+        </div>
+        <div class="todo-add__category">
+            <label>Category:</label>
+            <mat-select required class="custom-select" name="category" [(ngModel)]="newTask.category">
+                @for(category of categories; track category) {
+                    <mat-option  [value]="category">{{ category }}</mat-option>
+                }
+            </mat-select>
+        </div>
+        <button mat-button class="task-button" type="submit">Save Task</button>
+        <button mat-button class="task-button" type="button" (click)="closeAddTaskForm.emit(true)">Cancel</button>
+    </form>
+</div>

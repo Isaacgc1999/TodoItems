@@ -1,29 +1,7 @@
 <div class="todo-list">
     <button mat-button  class="task-button" (click)="openAddTaskForm()">Add Task</button>
     @if(showAddTaskForm){
-        <h2>Add a new Task</h2>
-        <div class="todo-list__add">
-            <form (ngSubmit)="addTask()">
-                <div>
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" required name="title" [(ngModel)]="newTask.title" required>
-                </div>
-                <div>
-                    <label for="description">Description:</label>
-                    <textarea id="description" required name="description" [(ngModel)]="newTask.description"></textarea>
-                </div>
-                <div>
-                    <label for="category">Category:</label>
-                    <mat-select required class="custom-select" name="category" [(ngModel)]="newTask.category">
-                        @for(category of categories; track category) {
-                            <mat-option  [value]="category">{{ category }}</mat-option>
-                        }
-                    </mat-select>
-                </div>
-                <button mat-button class="task-button" type="submit">Save Task</button>
-                <button mat-button class="task-button" type="button" (click)="closeAddTaskForm()">Cancel</button>
-            </form>
-        </div>
+        <app-todo-add (loadTodos)="loadTodos()" (closeAddTaskForm)="showAddTaskForm = false"></app-todo-add>
     }
 </div>
     <h2>Task List</h2>
@@ -53,15 +31,15 @@
                 <div class="todos__buttons">
                     <button (click)="deleteTodo(todo.id)">Delete</button>
                     @if(todo.totalProgress < 50) {
-                        <button (click)="openEditForm(todo)">Update</button>
+                        <button (click)="convertTodoToEdit(todo)">Update</button>
                     } @else {
-                        <button  disabled (click)="openEditForm(todo)">Update</button>
+                        <button  disabled (click)="convertTodoToEdit(todo)">Update</button>
                     }
                     <button (click)="openAddProgressionForm(todo)">Add Progression</button>
                 </div>
     
                 @if (editingTodo && editingTodo.id === todo.id) {
-                    <app-todo-edit [editingTodo]="convertTodoToEdit(todo)" (editingTodoOutput)="editingTodo" (closeEditing)="closeEditForm()" ></app-todo-edit>
+                    <app-todo-edit [editingTodo]="convertTodoToEdit(todo)" (editingTodoOutput)="editingTodo" (closeEditing)="editingTodo = null" ></app-todo-edit>
                 }
     
                 @if (addingProgressionFor && addingProgressionFor.id === todo.id) {
@@ -70,7 +48,6 @@
                     <mat-form-field>
                         <mat-label>Choose a date</mat-label>
                         <input matInput [(ngModel)]="newProgression.date" [matDatepicker]="picker" name="progressionDate" required>
-                        <mat-hint>MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -78,12 +55,11 @@
                     <mat-form-field>
                         <mat-label>Percentage (0-100)</mat-label>
                         <input matInput type="number" id="progressionPercentage" name="progressionPercentage" [(ngModel)]="newProgression.percentage" min="0" max="100" required>
-                        <mat-hint>{{ newProgression.percentage }}%</mat-hint>
                     </mat-form-field>
                 
-                    <button mat-button type="submit">Save Progression</button>
-                    <button mat-button type="button" (click)="closeAddProgressionForm()">Cancel</button>
                 </form>
+                <button mat-button type="submit">Save Progression</button>
+                <button mat-button type="button" (click)="closeAddProgressionForm()">Cancel</button>
 
                 }
             </li>

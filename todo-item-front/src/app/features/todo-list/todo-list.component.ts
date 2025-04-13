@@ -13,6 +13,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { DatePipe } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TodoEditComponent } from "../todo-edit/todo-edit.component";
+import { TodoAddComponent } from '../todo-add/todo-add.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -21,25 +22,23 @@ import { TodoEditComponent } from "../todo-edit/todo-edit.component";
   styleUrls: ['./todo-list.component.scss'],
   imports: [FormsModule,
     MatButtonModule,
-    MatSelectModule,
     MatInputModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
     MatSliderModule,
     DatePipe,
-    MatProgressBarModule, TodoEditComponent]
+    MatProgressBarModule,
+    TodoEditComponent,
+    TodoAddComponent]
 })
 export class TodoListComponent implements OnInit {
   todoService = inject(TodoService);
   todos: TodoItem[] = [];
   newProgression: Progression = { date: new Date(), percentage: 0 };
-  newTask: CreateTodoItem = { title: '', description: '', category: '' };
   showAddTaskForm = false;
   addingProgressionFor: TodoItem | null = null;
   editingTodo: UpdateTodoItem | null = null;
-
-  categories: string[] = ['Work', 'Personal', 'Studies', 'Others'];
 
   ngOnInit(): void {
     this.loadTodos();
@@ -47,23 +46,6 @@ export class TodoListComponent implements OnInit {
 
   openAddTaskForm(): void {
     this.showAddTaskForm = true;
-    this.newTask = { title: '', description: '', category: '' };
-  }
-
-  closeAddTaskForm(): void {
-    this.showAddTaskForm = false;
-  }
-
-  addTask(): void {
-    this.todoService.createTodo(this.newTask).subscribe(() => {
-      this.newTask = { title: '', description: '', category: '' };
-      this.closeAddTaskForm();
-      this.loadTodos();
-    });
-  }
-
-  openEditForm(todo: UpdateTodoItem): void {
-    this.editingTodo = this.convertTodoToEdit(todo);
   }
 
   closeEditForm(): void {
@@ -85,7 +67,6 @@ export class TodoListComponent implements OnInit {
     this.todoService.getTodos().subscribe({
       next: (todos) => {
         this.todos = todos;
-        console.log(this.todos);
       },
       error: (error) => {
         console.error('There was an error trying to load the items:', error);
