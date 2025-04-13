@@ -16,6 +16,10 @@ export interface CreateTodoItem {
 }
 
 export interface UpdateTodoItem {
+    id: number;
+    title: string;
     description: string;
+    category: string;
+    progressions: Progression[];
 }
 

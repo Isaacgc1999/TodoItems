@@ -7,6 +7,7 @@ import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [TodoListComponent, FormsModule, MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

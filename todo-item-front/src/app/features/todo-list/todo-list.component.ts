@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CreateTodoItem, TodoItem } from '../../shared/models/todo-item';
+import { CreateTodoItem, TodoItem, UpdateTodoItem } from '../../shared/models/todo-item';
 import { TodoService } from '../../core/services/todo.service';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,12 +12,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { DatePipe } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TodoEditComponent } from "../todo-edit/todo-edit.component";
 
 @Component({
   selector: 'app-todo-list',
+  standalone: true,
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
-  standalone: true,
   imports: [FormsModule,
     MatButtonModule,
     MatSelectModule,
@@ -27,18 +28,19 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatNativeDateModule,
     MatSliderModule,
     DatePipe,
-    MatProgressBarModule]
+    MatProgressBarModule, TodoEditComponent]
 })
 export class TodoListComponent implements OnInit {
   todoService = inject(TodoService);
   todos: TodoItem[] = [];
-  editingTodo: TodoItem | null = null;
   newProgression: Progression = { date: new Date(), percentage: 0 };
   newTask: CreateTodoItem = { title: '', description: '', category: '' };
   showAddTaskForm = false;
   addingProgressionFor: TodoItem | null = null;
+  editingTodo: UpdateTodoItem | null = null;
 
   categories: string[] = ['Work', 'Personal', 'Studies', 'Others'];
+
   ngOnInit(): void {
     this.loadTodos();
   }
@@ -60,10 +62,30 @@ export class TodoListComponent implements OnInit {
     });
   }
 
+  openEditForm(todo: UpdateTodoItem): void {
+    this.editingTodo = this.convertTodoToEdit(todo);
+  }
+
+  closeEditForm(): void {
+    this.editingTodo = null;
+  }
+
+  convertTodoToEdit(todo: UpdateTodoItem): UpdateTodoItem {
+    let updateItem: UpdateTodoItem = {
+      id: todo.id,
+      title: todo.title,
+      description: todo.description,
+      category: todo.category,
+      progressions: todo.progressions
+    };
+    return updateItem;
+  }
+
   loadTodos(): void {
     this.todoService.getTodos().subscribe({
       next: (todos) => {
         this.todos = todos;
+        console.log(this.todos);
       },
       error: (error) => {
         console.error('There was an error trying to load the items:', error);
@@ -80,29 +102,6 @@ export class TodoListComponent implements OnInit {
         console.error('There was an error trying to delete the item:', error);
       }
     });
-  }
-
-  openEditForm(todo: TodoItem): void {
-    this.editingTodo = { ...todo };
-  }
-
-  closeEditForm(): void {
-    this.editingTodo = null;
-  }
-
-  saveEdit(): void {
-    if (this.editingTodo) {
-      this.todoService.updateTodo(this.editingTodo.id, this.editingTodo)
-        .subscribe({
-          next: () => {
-            this.loadTodos();
-            this.closeEditForm();
-          },
-          error: (error) => {
-            console.error('There was an error trying to update the item:', error);
-          }
-        });
-    }
   }
 
   openAddProgressionForm(todo: TodoItem): void {
