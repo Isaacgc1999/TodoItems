@@ -11,7 +11,7 @@ namespace TodoListServer.Models
 
         public bool IsCompleted => TotalProgress >= 100;
 
-        public float TotalProgress => Progressions.Sum(p => p.Percentage);
+        public float TotalProgress => Progressions.LastOrDefault()?.Percentage ?? 0;
 
         public TodoItem(int id, string title, string description, string category)
         {
